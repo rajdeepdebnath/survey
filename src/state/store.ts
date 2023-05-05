@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userLoginReducer from "./userLoginSlice";
+import surveyReducer from "./surveySlice";
 
 export const store = configureStore({
   reducer: {
     userLogin: userLoginReducer,
+    survey: surveyReducer,
   },
 });
 

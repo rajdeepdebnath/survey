@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { signInApi } from "../api/userLoginApi";
+import { signInApi } from "../api/userApi";
 import { UserLogin } from "../type/userLogin";
 
 const initialState: UserLogin = {
@@ -32,7 +32,7 @@ export const userLoginSlice = createSlice({
 });
 
 export const signin = createAsyncThunk(
-  "catalogue/fetchInventory",
+  "userLogin",
   async (userLogin: UserLogin) => {
     const response = await signInApi(userLogin);
     return response;
