@@ -1,22 +1,23 @@
 import { BaseType } from "./baseType";
 
-export interface Survey extends BaseType {
+export interface Survey {
   surveyHeader?: SurveyHeader;
   surveyBody?: SurveyBody;
 }
 
-export interface SurveyHeader extends BaseType {
-  id?: string | null;
+export interface SurveyHeader {
+  id?: number | null;
   name: string;
-  description: string;
+  description?: string;
+  updatedDate?: string;
 }
 
-export interface SurveyBody extends BaseType {
+export interface SurveyBody {
   surveyForm: Array<Question>;
   rowId: number;
 }
 
-export interface Question extends BaseType {
+export interface Question {
   questionText: string;
   questionType: QuestionType;
   options?: Option;

@@ -1,10 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Survey, SurveyHeader } from "../type/Survey";
 import { createSurveyApi, getAllSurveyApi } from "../api/surveyApi";
+import { BaseType } from "../type/baseType";
 
-const initialState: Survey = {
-  surveyHeader: undefined,
-  surveyBody: undefined,
+interface SurveyState extends BaseType {
+  surveys: Array<Survey> | null;
+}
+
+const initialState: SurveyState = {
+  surveys: null,
   loading: false,
   error: null,
 };
@@ -34,6 +38,10 @@ export const surveySlice = createSlice({
       .addCase(getAllSurvey.fulfilled, (state, action) => {
         state.loading = false;
         console.log(action.payload);
+
+        state.surveys = action.payload?.map((e) => ({
+          surveyHeader: e,
+        })) as Array<Survey>;
       })
       .addCase(getAllSurvey.rejected, (state, action) => {
         state.loading = false;

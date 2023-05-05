@@ -13,6 +13,9 @@
 7. es-lint
 8. Prettier
 9. [husky](https://typicode.github.io/husky/#/?id=install)
+10. localforage
+11. match-sorter
+12. sort-by
 
 ### Features
 
