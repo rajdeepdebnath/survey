@@ -1,11 +1,17 @@
-import { Survey } from "../type/Survey";
+import { Button } from "@mui/material";
+import { SurveyHeader } from "../type/Survey";
 
 interface Props {
-  survey: Survey;
+  surveyHeader: SurveyHeader;
 }
 
-const SurveyGridItem = ({ survey }: Props) => {
-  return <div>{survey.surveyHeader?.name}</div>;
+const SurveyGridItem = ({ surveyHeader }: Props) => {
+  return (
+    <div>
+      {surveyHeader.name}
+      <Button variant="contained">VIEW RESPONSE</Button>
+    </div>
+  );
 };
 
 export default SurveyGridItem;

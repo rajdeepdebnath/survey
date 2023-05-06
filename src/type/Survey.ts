@@ -1,5 +1,3 @@
-import { BaseType } from "./baseType";
-
 export interface Survey {
   surveyHeader?: SurveyHeader;
   surveyBody?: SurveyBody;

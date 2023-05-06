@@ -37,7 +37,6 @@ export const surveySlice = createSlice({
       })
       .addCase(getAllSurvey.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
 
         state.surveys = action.payload?.map((e) => ({
           surveyHeader: e,
