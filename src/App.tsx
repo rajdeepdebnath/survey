@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import CreateSurvey from "./pages/CreateSurvey";
 import Layout from "./pages/Layout";
+import CreateSurveyQuestion from "./pages/CreateSurveyQuestion";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <CreateSurvey />
+      </Layout>
+    ),
+  },
+  {
+    path: "/createsurveyquestion/:surveyName",
+    element: (
+      <Layout>
+        <CreateSurveyQuestion />
       </Layout>
     ),
   },

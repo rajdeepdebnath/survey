@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { signInApi } from "../api/userApi";
 import { UserLogin } from "../type/userLogin";
+import { API_STATUS } from "../type/baseType";
 
 const initialState: UserLogin = {
   username: null,
   action: null,
   password: null,
   token: null,
+  apiStatus: API_STATUS.IDLE,
   loading: false,
   error: null,
 };

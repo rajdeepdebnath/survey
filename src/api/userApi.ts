@@ -7,7 +7,7 @@ export const signInApi = async (userLogin: UserLogin): Promise<string> => {
     userLogin
   );
 
-  console.log(response);
+  //console.log(response);
 
   return response.data as string;
 };

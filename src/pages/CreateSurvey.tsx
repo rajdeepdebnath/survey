@@ -1,22 +1,37 @@
-import { Box, Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, CircularProgress, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { createSurvey } from "../state/surveySlice";
 import { SurveyHeader } from "../type/Survey";
 import { RootState } from "../state/store";
+import { API_STATUS } from "../type/baseType";
+import { useNavigate } from "react-router-dom";
+import randomstring from "randomstring";
 
 const CreateSurvey = () => {
-  const [loading, error] = useAppSelector((state: RootState) => [
-    state.survey.loading,
-    state.survey.error,
-  ]);
+  const navigate = useNavigate();
+  const [loading, error, createSurveyApiStatus] = useAppSelector(
+    (state: RootState) => [
+      state.survey.loading,
+      state.survey.error,
+      state.survey.createSurveyApiStatus,
+    ]
+  );
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const dispatch = useAppDispatch();
 
   const handleNext = () => {
-    dispatch(createSurvey({ name, description } as SurveyHeader));
+    const uniqueName = `${name}-${randomstring.generate(7)}`;
+    setName(uniqueName);
+    dispatch(createSurvey({ name: uniqueName, description } as SurveyHeader));
   };
+
+  useEffect(() => {
+    if (createSurveyApiStatus === API_STATUS.FULLFILED) {
+      navigate(`/createsurveyquestion/${name}`);
+    }
+  }, [createSurveyApiStatus]);
 
   return (
     <Box>
@@ -33,10 +48,9 @@ const CreateSurvey = () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      {loading ? "loading..." : null}
       {error ? error : null}
       <Button variant="contained" onClick={handleNext}>
-        Next
+        {loading ? <CircularProgress /> : "Next"}
       </Button>
     </Box>
   );

@@ -8,7 +8,9 @@ interface Props {
 const SurveyGridItem = ({ surveyHeader }: Props) => {
   return (
     <div>
-      {surveyHeader.name}
+      {surveyHeader.name.lastIndexOf("-") > 0
+        ? surveyHeader.name.substring(0, surveyHeader.name.lastIndexOf("-"))
+        : surveyHeader.name}
       <Button variant="contained">VIEW RESPONSE</Button>
     </div>
   );

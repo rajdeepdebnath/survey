@@ -1,6 +1,6 @@
 export interface Survey {
   surveyHeader?: SurveyHeader;
-  surveyBody?: SurveyBody;
+  surveyBody?: Array<Question>;
 }
 
 export interface SurveyHeader {
@@ -10,15 +10,16 @@ export interface SurveyHeader {
   updatedDate?: string;
 }
 
-export interface SurveyBody {
-  surveyForm: Array<Question>;
-  rowId: number;
+export interface SurveyForm {
+  survey_form: Array<Question>;
+  row_id: number;
 }
 
 export interface Question {
   questionText: string;
   questionType: QuestionType;
-  options?: Option;
+  options?: Array<string>;
+  isRequired: boolean;
 }
 
 export interface Option {
