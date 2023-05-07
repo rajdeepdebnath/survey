@@ -1,7 +1,11 @@
 import { RootState } from "../state/store";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { useEffect, useState } from "react";
-import { getCurrentSurvey, saveSurveyForm } from "../state/surveySlice";
+import {
+  getCurrentSurvey,
+  resetSaveSurveyFormApiStatus,
+  saveSurveyForm,
+} from "../state/surveySlice";
 import Button from "@mui/material/Button";
 import QuestionView from "../components/QuestionView";
 import { useParams } from "react-router-dom";
@@ -18,17 +22,18 @@ const NEW_QUESTION: Question = {
 const CreateSurveyQuestion = () => {
   const { surveyName } = useParams();
   const dispatch = useAppDispatch();
-  const [currentQuestion, setCurrentQuestion] = useState({ ...NEW_QUESTION });
+  const [currentQuestion, setCurrentQuestion] = useState<Question | null>({
+    ...NEW_QUESTION,
+  });
 
-  const [currentSurvey, saveSurveyFormApiStatus] = useAppSelector(
-    (state: RootState) => [
-      state.survey.currentSurvey,
-      state.survey.saveSurveyFormApiStatus,
-    ]
+  const { currentSurvey, saveSurveyFormApiStatus } = useAppSelector(
+    (state: RootState) => ({
+      ...state.survey,
+    })
   );
 
   useEffect(() => {
-    if (surveyName) dispatch(getCurrentSurvey(surveyName));
+    if (surveyName && !currentSurvey) dispatch(getCurrentSurvey(surveyName));
   }, [surveyName]);
 
   const handleAddNewQuestion = () => {
@@ -54,6 +59,7 @@ const CreateSurveyQuestion = () => {
     if (saveSurveyFormApiStatus === API_STATUS.FULLFILED) {
       alert("Question saved successfully");
       setCurrentQuestion({ ...NEW_QUESTION });
+      dispatch(resetSaveSurveyFormApiStatus());
     }
   }, [saveSurveyFormApiStatus]);
 

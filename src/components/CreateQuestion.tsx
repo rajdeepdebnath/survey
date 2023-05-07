@@ -6,7 +6,7 @@ import { $enum } from "ts-enum-util";
 
 interface Props {
   currentQuestion: Question;
-  setCurrentQuestion: React.Dispatch<React.SetStateAction<Question>>;
+  setCurrentQuestion: React.Dispatch<React.SetStateAction<Question | null>>;
 }
 
 const CreateQuestion = ({ currentQuestion, setCurrentQuestion }: Props) => {

@@ -7,6 +7,7 @@ import {
   saveSurveyFormApi,
 } from "../api/surveyApi";
 import { API_STATUS, BaseType } from "../type/baseType";
+import { lowerCase } from "lodash";
 
 interface SurveyState extends BaseType {
   surveys: Array<Survey> | null;
@@ -46,6 +47,9 @@ export const surveySlice = createSlice({
         ] as Array<Question>;
       }
     },
+    resetSaveSurveyFormApiStatus: (state) => {
+      state.saveSurveyFormApiStatus = API_STATUS.IDLE;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -77,9 +81,9 @@ export const surveySlice = createSlice({
         state.error = action.error.message;
         state.saveSurveyFormApiStatus = API_STATUS.REJECTED;
       })
-      .addCase(getCurrentSurvey.pending, (state) => {
-        state.loading = true;
-      })
+      // .addCase(getCurrentSurvey.pending, (state) => {
+      //   state.loading = true;
+      // })
       .addCase(getCurrentSurvey.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload) {
@@ -137,12 +141,28 @@ export const getCurrentSurvey = createAsyncThunk(
 export const saveSurveyForm = createAsyncThunk(
   "survey/saveSurveyForm",
   async (surveyForm: SurveyForm) => {
-    const response = await saveSurveyFormApi(surveyForm);
+    const transformedSurveyForm = {
+      row_id: surveyForm.row_id,
+      survey_form: surveyForm.survey_form.map(
+        (s) =>
+          ({
+            ...s,
+            questionType: lowerCase(s.questionType),
+          } as Question)
+      ),
+    };
+    console.log(transformedSurveyForm);
+
+    const response = await saveSurveyFormApi(transformedSurveyForm);
     return response;
   }
 );
 
 // Action creators are generated for each case reducer function
-export const { setCurrentSurvey, setNewQuestion } = surveySlice.actions;
+export const {
+  setCurrentSurvey,
+  setNewQuestion,
+  resetSaveSurveyFormApiStatus,
+} = surveySlice.actions;
 
 export default surveySlice.reducer;
