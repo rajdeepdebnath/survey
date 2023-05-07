@@ -4,13 +4,11 @@ import { Question } from "../type/Survey";
 import QuestionList from "./QuestionList";
 import CreateQuestion from "./CreateQuestion";
 import { saveSurveyForm } from "../state/surveySlice";
+import { useContext } from "react";
+import { QuestionContext } from "../state/QuestionContext";
 
-interface Props {
-  currentQuestion: Question | null;
-  setCurrentQuestion: React.Dispatch<React.SetStateAction<Question | null>>;
-}
-
-const QuestionView = ({ currentQuestion, setCurrentQuestion }: Props) => {
+const QuestionView = () => {
+  const { currentQuestion, setCurrentQuestion } = useContext(QuestionContext);
   const dispatch = useAppDispatch();
 
   const currentSurvey = useAppSelector(
@@ -41,12 +39,7 @@ const QuestionView = ({ currentQuestion, setCurrentQuestion }: Props) => {
 
   return (
     <div>
-      {currentSurvey && currentQuestion && (
-        <CreateQuestion
-          currentQuestion={currentQuestion}
-          setCurrentQuestion={setCurrentQuestion}
-        />
-      )}
+      {currentSurvey && currentQuestion && <CreateQuestion />}
       {currentSurvey && currentSurvey.surveyBody && (
         <QuestionList
           questions={currentSurvey.surveyBody}

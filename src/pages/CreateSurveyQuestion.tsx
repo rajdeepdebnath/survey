@@ -11,6 +11,7 @@ import QuestionView from "../components/QuestionView";
 import { useParams } from "react-router-dom";
 import { Question, QuestionType } from "../type/Survey";
 import { API_STATUS } from "../type/baseType";
+import { QuestionContext } from "../state/QuestionContext";
 
 const NEW_QUESTION: Question = {
   questionText: "",
@@ -64,19 +65,14 @@ const CreateSurveyQuestion = () => {
   }, [saveSurveyFormApiStatus]);
 
   return (
-    <div>
+    <QuestionContext.Provider value={{ currentQuestion, setCurrentQuestion }}>
       Create Question {currentSurvey?.surveyHeader?.id} -{" "}
       {currentSurvey?.surveyHeader?.name}
-      {currentSurvey && (
-        <QuestionView
-          currentQuestion={currentQuestion}
-          setCurrentQuestion={setCurrentQuestion}
-        />
-      )}
+      {currentSurvey && <QuestionView />}
       <Button variant="contained" onClick={handleAddNewQuestion}>
         Add new question
       </Button>
-    </div>
+    </QuestionContext.Provider>
   );
 };
 

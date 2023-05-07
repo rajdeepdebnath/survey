@@ -32,6 +32,7 @@ export interface Option {
 export enum QuestionType {
   MCQ = "MCQ",
   STAR_RATING = "STAR_RATING",
+  EMOJI_RATING = "EMOJI_RATING",
   DESCRIPTIVE = "DESCRIPTIVE",
   NUMBER_RATING = "NUMBER_RATING",
   SHORT_ANSWER = "SHORT_ANSWER",

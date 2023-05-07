@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { Question, QuestionType } from "../type/Survey";
+import { QuestionType } from "../type/Survey";
 import TextField from "@mui/material/TextField";
 import { MenuItem, Select, Switch } from "@mui/material";
 import { $enum } from "ts-enum-util";
+import QuestionTypeDetails from "./QuestionTypeDetails";
+import { useContext } from "react";
+import { QuestionContext } from "../state/QuestionContext";
 
-interface Props {
-  currentQuestion: Question;
-  setCurrentQuestion: React.Dispatch<React.SetStateAction<Question | null>>;
-}
-
-const CreateQuestion = ({ currentQuestion, setCurrentQuestion }: Props) => {
+const CreateQuestion = () => {
+  const { currentQuestion, setCurrentQuestion } = useContext(QuestionContext);
   const [questionText, setText] = useState(currentQuestion.questionText);
   const [isRequired, setIsRequired] = useState(currentQuestion.isRequired);
   const [questionType, setQuestionType] = useState(
@@ -28,6 +27,12 @@ const CreateQuestion = ({ currentQuestion, setCurrentQuestion }: Props) => {
 
   return (
     <div>
+      <TextField
+        label="Question Text"
+        variant="outlined"
+        value={questionText}
+        onChange={(e) => setText(e.target.value)}
+      />
       <Switch
         checked={isRequired}
         onChange={(e) => setIsRequired(e.target.checked)}
@@ -46,12 +51,7 @@ const CreateQuestion = ({ currentQuestion, setCurrentQuestion }: Props) => {
             </MenuItem>
           ))}
       </Select>
-      <TextField
-        label="Question Text"
-        variant="outlined"
-        value={questionText}
-        onChange={(e) => setText(e.target.value)}
-      />
+      <QuestionTypeDetails questionType={questionType} />
     </div>
   );
 };

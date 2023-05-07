@@ -73,7 +73,7 @@ export const surveySlice = createSlice({
       .addCase(saveSurveyForm.fulfilled, (state, action) => {
         state.loading = false;
         if (state.currentSurvey && action.payload)
-          state.currentSurvey.surveyBody = action.payload.survey_form;
+          state.currentSurvey.surveyBody = action.payload;
         state.saveSurveyFormApiStatus = API_STATUS.FULLFILED;
       })
       .addCase(saveSurveyForm.rejected, (state, action) => {
@@ -153,8 +153,8 @@ export const saveSurveyForm = createAsyncThunk(
     };
     console.log(transformedSurveyForm);
 
-    const response = await saveSurveyFormApi(transformedSurveyForm);
-    return response;
+    await saveSurveyFormApi(transformedSurveyForm);
+    return surveyForm.survey_form;
   }
 );
 
